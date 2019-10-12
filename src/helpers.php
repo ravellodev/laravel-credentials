@@ -1,6 +1,7 @@
 <?php
 
 use BeyondCode\Credentials\Credentials;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 if (! function_exists('credentials')) {
     /**
@@ -21,6 +22,8 @@ if (! function_exists('credentials')) {
             return $credentials->get($key, $default);
         } catch (ReflectionException $e) {
             return Credentials::CONFIG_PREFIX.$key;
-        }
+		} catch (BindingResolutionException $e) {
+			return Credentials::CONFIG_PREFIX.$key;
+		}
     }
 }
